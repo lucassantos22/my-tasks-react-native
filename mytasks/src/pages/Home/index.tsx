@@ -9,8 +9,22 @@ import {
   TextInput,
 } from 'react-native';
 
+interface Task {
+  id: string;
+  title: string;
+}
+
 export function Home(): JSX.Element {
   const [newTask, setNewTask] = useState('');
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  function handleAddNewTask(): void {
+    const data = {
+      id: new Date().getTime().toString(),
+      title: newTask,
+    };
+    setTasks([...tasks, data]);
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -22,11 +36,18 @@ export function Home(): JSX.Element {
           placeholder="Nova tarefa..."
           style={styles.input}
         />
-        <TouchableOpacity activeOpacity={0.7} style={styles.button}>
+        <TouchableOpacity
+          onPress={handleAddNewTask}
+          activeOpacity={0.7}
+          style={styles.button}>
           <Text style={styles.buttonText}>Adicionar</Text>
         </TouchableOpacity>
         <Text style={styles.titleTasks}>Minhas tarefas</Text>
-        <Text style={{color: 'red'}}>{newTask}</Text>
+        {tasks.map(task => (
+          <TouchableOpacity key={task.id} style={styles.buttonTask}>
+            <Text style={styles.titleTask}>{task.title}</Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </SafeAreaView>
   );
@@ -70,6 +91,18 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#121214',
     fontSize: 18,
+    fontWeight: 'bold',
+  },
+  buttonTask: {
+    backgroundColor: '#29292e',
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 50,
+    alignItems: 'center',
+  },
+  titleTask: {
+    color: '#f1f1f1',
+    fontSize: 20,
     fontWeight: 'bold',
   },
 });
