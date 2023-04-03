@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Platform,
   Text,
@@ -10,11 +10,14 @@ import {
 } from 'react-native';
 
 export function Home(): JSX.Element {
+  const [newTask, setNewTask] = useState('');
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Text style={styles.title}>Welcome, dev!</Text>
         <TextInput
+          onChangeText={setNewTask}
           placeholderTextColor="#555"
           placeholder="Nova tarefa..."
           style={styles.input}
@@ -23,6 +26,7 @@ export function Home(): JSX.Element {
           <Text style={styles.buttonText}>Adicionar</Text>
         </TouchableOpacity>
         <Text style={styles.titleTasks}>Minhas tarefas</Text>
+        <Text style={{color: 'red'}}>{newTask}</Text>
       </View>
     </SafeAreaView>
   );
