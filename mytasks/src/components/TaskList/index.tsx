@@ -10,10 +10,10 @@ interface TaskListProps {
   tasks: Task[];
 }
 
-export const TaskList = (props: TaskListProps) => {
+export const TaskList = ({tasks}: TaskListProps) => {
   return (
     <FlatList
-      data={props.tasks}
+      data={tasks}
       keyExtractor={item => item.id}
       renderItem={({item}) => (
         <TouchableOpacity style={styles.buttonTask}>
