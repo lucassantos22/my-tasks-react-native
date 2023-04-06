@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   Platform,
   Text,
@@ -10,22 +10,17 @@ import {
 } from 'react-native';
 
 import {TaskList} from '../../components/TaskList';
-
-interface Task {
-  id: string;
-  title: string;
-}
+import {TasksContext} from '../../context/TasksContext';
 
 export function Home(): JSX.Element {
   const [newTask, setNewTask] = useState('');
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const tasks = useContext(TasksContext);
 
   function handleAddNewTask(): void {
     const data = {
       id: new Date().getTime().toString(),
       title: newTask,
     };
-    setTasks([...tasks, data]);
   }
 
   return (
@@ -45,7 +40,7 @@ export function Home(): JSX.Element {
           <Text style={styles.buttonText}>Adicionar</Text>
         </TouchableOpacity>
         <Text style={styles.titleTasks}>Minhas tarefas</Text>
-        <TaskList tasks={tasks} />
+        <TaskList />
       </View>
     </SafeAreaView>
   );
