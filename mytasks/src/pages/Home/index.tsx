@@ -14,13 +14,14 @@ import {TasksContext} from '../../context/TasksContext';
 
 export function Home(): JSX.Element {
   const [newTask, setNewTask] = useState('');
-  const tasks = useContext(TasksContext);
+  const {addTask} = useContext(TasksContext);
 
   function handleAddNewTask(): void {
     const data = {
       id: new Date().getTime().toString(),
       title: newTask,
     };
+    addTask();
   }
 
   return (
