@@ -1,27 +1,52 @@
-import React, {createContext} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {createContext, useEffect, useState} from 'react';
 
 interface IProps {
   children: React.ReactElement;
 }
 
-export interface ITasksContext {
+export interface ITask {
   id: string;
   title: string;
-  addTask(): void;
 }
+
+export interface ITasksContext {
+  tasks: ITask[];
+  addTask(task: ITask): void;
+}
+
+const tasksData = '@MyTasks:Tasks';
 
 export const TasksContext = createContext<ITasksContext>({} as ITasksContext);
 
 export const TasksProvider: React.FunctionComponent<IProps> = ({children}) => {
-  function addTask() {
-    console.log('Adding task...');
+  const [data, setData] = useState<ITask[]>([]);
+
+  useEffect(() => {
+    async function loadTasks() {
+      const taskList = await AsyncStorage.getItem(tasksData);
+      if (taskList) {
+        setData(JSON.parse(taskList));
+      }
+    }
+
+    loadTasks();
+  }, []);
+
+  async function addTask(task: ITask) {
+    try {
+      const newTaskList = [...data, task];
+      setData(newTaskList);
+      await AsyncStorage.setItem(tasksData, JSON.stringify(newTaskList));
+    } catch (err) {
+      throw new Error(err as string);
+    }
   }
 
   return (
     <TasksContext.Provider
       value={{
-        id: '1',
-        title: 'task01',
+        tasks: data,
         addTask,
       }}>
       {children}

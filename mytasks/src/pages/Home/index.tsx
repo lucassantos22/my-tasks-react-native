@@ -21,7 +21,7 @@ export function Home(): JSX.Element {
       id: new Date().getTime().toString(),
       title: newTask,
     };
-    addTask();
+    addTask(data);
   }
 
   return (
