@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 
 import {TaskList} from '../../components/TaskList';
-import {TasksContext} from '../../context/TasksContext';
+import {useTaskList} from '../../context/TasksContext';
 
 export function Home(): JSX.Element {
   const [newTask, setNewTask] = useState('');
-  const {addTask} = useContext(TasksContext);
+  const {addTask} = useTaskList();
 
   function handleAddNewTask(): void {
     const data = {

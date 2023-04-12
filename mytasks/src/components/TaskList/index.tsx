@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 
-import {ITask, TasksContext} from '../../context/TasksContext';
+import {ITask, useTaskList} from '../../context/TasksContext';
 
 export const TaskList = () => {
-  const {tasks} = useContext(TasksContext);
+  const {tasks} = useTaskList();
   return (
     <FlatList
       data={tasks as unknown as ITask[]}
