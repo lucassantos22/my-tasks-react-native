@@ -23,5 +23,6 @@ describe('Home page', () => {
       'Tarefa 1',
     );
     fireEvent.press(screen.getByText('Adicionar'));
+    expect(addTask).toHaveBeenCalled();
   });
 });
