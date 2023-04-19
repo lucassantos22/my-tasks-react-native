@@ -5,7 +5,7 @@ import {TaskList} from '../../src/components/TaskList';
 import {TasksContext} from '../../src/context/TasksContext';
 
 describe('TaskList page', () => {
-  it('removeTask should be called if Adicionar button is clicked', () => {
+  it('alert should be called if any task is clicked', () => {
     const alertSpy = jest.spyOn(Alert, 'alert');
     const removeTask = jest.fn();
     render(
