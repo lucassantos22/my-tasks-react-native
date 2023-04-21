@@ -14,7 +14,7 @@ import {useTaskList} from '../../context/TasksContext';
 
 export function Home(): JSX.Element {
   const [newTask, setNewTask] = useState('');
-  const {addTask} = useTaskList();
+  const {tasks, addTask} = useTaskList();
 
   function handleAddNewTask(): void {
     const data = {
@@ -40,7 +40,9 @@ export function Home(): JSX.Element {
           style={styles.button}>
           <Text style={styles.buttonText}>Adicionar</Text>
         </TouchableOpacity>
-        <Text style={styles.titleTasks}>Minhas tarefas</Text>
+        {!!tasks.length && (
+          <Text style={styles.titleTasks}>Minhas tarefas</Text>
+        )}
         <TaskList />
       </View>
     </SafeAreaView>
